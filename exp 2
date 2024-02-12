@@ -1,0 +1,9 @@
+class c1{
+    val a:String="Hello Preeta"
+    fun fun1(){
+        print(a)
+    }
+}
+fun main(){
+    val obj1 = c1()
+    obj1.fun1()
