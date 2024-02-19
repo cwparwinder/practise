@@ -1,0 +1,5 @@
+fun main(){
+    var a:Int=0
+    for(a in 0..10)
+        println("$a")
+}
