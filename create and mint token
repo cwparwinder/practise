@@ -1,0 +1,59 @@
+npm install -g truffle
+npm install -g ganache-cli
+
+mkdir MyTokenProject
+cd MyTokenProject
+truffle init
+
+npm install @openzeppelin/contracts
+
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+
+contract MyToken is ERC20 {
+    constructor(uint256 initialSupply) ERC20("MyToken", "MTK") {
+        _mint(msg.sender, initialSupply * (10 ** decimals()));
+    }
+}
+
+const MyToken = artifacts.require("MyToken");
+
+module.exports = function (deployer) {
+    const initialSupply = 1000000; // 1 million tokens
+    deployer.deploy(MyToken, initialSupply);
+};
+
+ganache-cli
+
+truffle compile
+truffle migrate --network development
+
+const Web3 = require('web3');
+const MyToken = require('./build/contracts/MyToken.json');
+
+const init = async () => {
+    const web3 = new Web3('http://localhost:8545'); // Ganache URL
+    const networkId = await web3.eth.net.getId();
+    const deployedNetwork = MyToken.networks[networkId];
+    const contract = new web3.eth.Contract(
+        MyToken.abi,
+        deployedNetwork.address
+    );
+
+    const accounts = await web3.eth.getAccounts();
+    console.log('Accounts:', accounts);
+
+    const name = await contract.methods.name().call();
+    const symbol = await contract.methods.symbol().call();
+    const totalSupply = await contract.methods.totalSupply().call();
+
+    console.log('Token Name:', name);
+    console.log('Token Symbol:', symbol);
+    console.log('Total Supply:', totalSupply);
+};
+
+init();
+
+node interact.js
