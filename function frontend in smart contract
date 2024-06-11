@@ -1,0 +1,81 @@
+npx create-react-app smart-contract-frontend
+cd smart-contract-frontend
+
+npm install web3 ethers
+
+npm install @material-ui/core
+
+import Web3 from 'web3';
+
+let web3;
+
+if (window.ethereum) {
+  web3 = new Web3(window.ethereum);
+  try {
+    window.ethereum.enable(); // Request account access if needed
+  } catch (error) {
+    console.error("User denied account access...");
+  }
+} else if (window.web3) {
+  web3 = new Web3(window.web3.currentProvider);
+} else {
+  console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
+}
+
+export default web3;
+
+import web3 from './web3Service';
+import ContractABI from './ContractABI.json';
+
+const contractAddress = 'YOUR_SMART_CONTRACT_ADDRESS';
+const contract = new web3.eth.Contract(ContractABI, contractAddress);
+
+export const getContractData = async () => {
+  const data = await contract.methods.yourMethodName().call();
+  return data;
+};
+
+export const setContractData = async (account, value) => {
+  const result = await contract.methods.yourMethodName(value).send({ from: account });
+  return result;
+};
+
+export default contract;
+
+import React, { useState, useEffect } from 'react';
+import web3 from './services/web3Service';
+import { getContractData, setContractData } from './services/contractService';
+
+function App() {
+  const [account, setAccount] = useState('');
+  const [contractData, setContractData] = useState('');
+
+  useEffect(() => {
+    const loadBlockchainData = async () => {
+      const accounts = await web3.eth.getAccounts();
+      setAccount(accounts[0]);
+      const data = await getContractData();
+      setContractData(data);
+    };
+
+    loadBlockchainData();
+  }, []);
+
+  const handleSetData = async () => {
+    await setContractData(account, 'New Value');
+    const data = await getContractData();
+    setContractData(data);
+  };
+
+  return (
+    <div>
+      <h1>Smart Contract Management</h1>
+      <p>Account: {account}</p>
+      <p>Contract Data: {contractData}</p>
+      <button onClick={handleSetData}>Set Data</button>
+    </div>
+  );
+}
+
+export default App;
+
