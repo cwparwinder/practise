@@ -1,0 +1,47 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract ErrorHandlingExample {
+
+    address public owner;
+    uint256 public balance;
+
+    // Constructor sets the owner to the address that deploys the contract
+    constructor() {
+        owner = msg.sender;
+        balance = 0;
+    }
+
+    // Function to deposit Ether into the contract
+    function deposit() public payable {
+        require(msg.value > 0, "Deposit amount must be greater than zero");
+        balance += msg.value;
+    }
+
+    // Function to withdraw Ether from the contract
+    function withdraw(uint256 amount) public {
+        // Check if the caller is the owner
+        require(msg.sender == owner, "Only the owner can withdraw");
+
+        // Check if there are sufficient funds
+        require(amount <= balance, "Insufficient funds");
+
+        // Adjust the balance and transfer the amount
+        balance -= amount;
+        payable(msg.sender).transfer(amount);
+    }
+
+    // Function to perform a specific action, demonstrating the use of assert()
+    function performAction() public view {
+        // Assert that the balance is always non-negative
+        assert(balance >= 0);
+    }
+
+    // Function to demonstrate the use of revert()
+    function triggerRevert(uint256 x) public pure {
+        if (x < 10) {
+            revert("Value must be at least 10");
+        }
+    }
+}
+
