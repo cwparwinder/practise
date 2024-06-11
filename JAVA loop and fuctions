@@ -1,0 +1,91 @@
+// Create a variable to hold your NFTs
+let nfts = [];
+
+// This function will take in some values as parameters, create an
+// NFT object using the parameters passed to it for its metadata, 
+// and store it in the variable above.
+function mintNFT(name, artist, owner, dateCreated) {
+    const nft = {
+        name: name,
+        artist: artist,
+        owner: owner,
+        dateCreated: dateCreated
+    };
+    nfts.push(nft);
+}
+
+// Create a "loop" that will go through an "array" of NFTs
+// and print their metadata with console.log()
+function listNFTs() {
+    for (let i = 0; i < nfts.length; i++) {
+        console.log("Name: " + nfts[i].name);
+        console.log("Artist: " + nfts[i].artist);
+        console.log("Owner: " + nfts[i].owner);
+        console.log("Date Created: " + nfts[i].dateCreated);
+        console.log("--------------------------");
+    }
+}
+
+// Print the total number of NFTs we have minted to the console
+function getTotalSupply() {
+    return nfts.length;
+}
+
+// Call your functions below this line
+
+// Mint a few NFTs
+mintNFT("CryptoPunk #1", "Larva Labs", "Alice", "2023-01-01");
+mintNFT("Bored Ape #1", "Yuga Labs", "Bob", "2023-02-15");
+mintNFT("Art Blocks #1", "Art Blocks", "Charlie", "2023-03-10");
+
+// List all NFTs
+listNFTs();
+
+// Print the total supply of NFTs
+console.log("Total Supply: " + getTotalSupply());
+
+// Create a variable to hold your NFTs
+let nfts = [];
+
+// This function will take in some values as parameters, create an
+// NFT object using the parameters passed to it for its metadata, 
+// and store it in the variable above.
+function mintNFT(name, artist, owner, dateCreated) {
+    const nft = {
+        name: name,
+        artist: artist,
+        owner: owner,
+        dateCreated: dateCreated
+    };
+    nfts.push(nft);
+}
+
+// Create a "loop" that will go through an "array" of NFTs
+// and print their metadata with console.log()
+function listNFTs() {
+    for (let i = 0; i < nfts.length; i++) {
+        console.log("Name: " + nfts[i].name);
+        console.log("Artist: " + nfts[i].artist);
+        console.log("Owner: " + nfts[i].owner);
+        console.log("Date Created: " + nfts[i].dateCreated);
+        console.log("--------------------------");
+    }
+}
+
+// Print the total number of NFTs we have minted to the console
+function getTotalSupply() {
+    return nfts.length;
+}
+
+// Call your functions below this line
+
+// Mint a few NFTs
+mintNFT("CryptoPunk #1", "Larva Labs", "Alice", "2023-01-01");
+mintNFT("Bored Ape #1", "Yuga Labs", "Bob", "2023-02-15");
+mintNFT("Art Blocks #1", "Art Blocks", "Charlie", "2023-03-10");
+
+// List all NFTs
+listNFTs();
+
+// Print the total supply of NFTs
+console.log("Total Supply: " + getTotalSupply());
