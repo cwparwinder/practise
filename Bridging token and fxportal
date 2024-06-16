@@ -1,0 +1,40 @@
+import re
+
+# Example FXPOTENTIAL code with tokens
+fxpotential_code = """
+function process() {
+    let data = "{{token_name}}";
+    let value = "[[TOKEN_NAME]]";
+    console.log("Processing data: " + data + " and value: " + value);
+    return "<<TokenName>>";
+}
+"""
+
+# Data to replace tokens
+token_data = {
+    "token_name": "data1",
+    "TOKEN_NAME": "value1",
+    "TokenName": "result1"
+}
+
+# Function to replace tokens in the FXPOTENTIAL code
+def bridge_tokens(code, data):
+    for token, value in data.items():
+        code = re.sub(rf'{{{{{token}}}}}', value, code)
+        code = re.sub(rf'\[\[{token}\]\]', value, code)
+        code = re.sub(rf'<<{token}>>', value, code)
+    return code
+
+# Bridging tokens with the data
+bridged_code = bridge_tokens(fxpotential_code, token_data)
+
+# Output the bridged code
+print(bridged_code)
+
+
+function process() {
+    let data = "data1";
+    let value = "value1";
+    console.log("Processing data: " + data + " and value: " + value);
+    return "result1";
+}
